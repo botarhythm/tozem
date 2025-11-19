@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>藤ゼム（トウゼム） – 海辺の古民家一棟貸し宿 | 千葉県館山市</title>
-    <meta name="description" content="千葉・南房総の西川名にある一棟貸しの古民家宿「藤ゼム（トウゼム）」。海辺の静けさと古民家のぬくもりに包まれる、貸切のプライベートな滞在をお楽しみください。">
+    <meta name="description" content="千葉・南房総の西川名にある一棟貸しの古民家宿「藤ゼム（トウゼム）」。">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 
     <style>
         /* =========================================
-           CSS Styles (Merged)
+           CSS Styles (Updated for Language Switch)
            ========================================= */
         :root {
             --color-bg: #f9f8f4;
@@ -37,6 +37,41 @@
         a:hover { opacity: 0.7; }
         img { max-width: 100%; height: auto; display: block; }
         ul { list-style: none; }
+
+        /* Language Switch Logic */
+        /* デフォルトは日本語表示・英語非表示 */
+        .lang-en { display: none; }
+        .lang-jp { display: block; }
+
+        /* bodyに .is-english クラスがついた時は逆転 */
+        body.is-english .lang-en { display: block; }
+        body.is-english .lang-jp { display: none; }
+        
+        /* インライン要素用の切替設定 */
+        span.lang-en, span.lang-jp { display: none; }
+        body:not(.is-english) span.lang-jp { display: inline; }
+        body.is-english span.lang-en { display: inline; }
+
+        /* Language Button */
+        .header__lang-btn {
+            background: transparent;
+            border: 1px solid var(--color-white);
+            color: var(--color-white);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: var(--font-en);
+            margin-left: 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .header__lang-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        .header.is-scrolled .header__lang-btn {
+            color: var(--color-text);
+            border-color: var(--color-text);
+        }
+        .header.is-scrolled .header__lang-btn:hover { background: rgba(0,0,0,0.1); }
 
         /* Layout & Components */
         .container { width: 90%; max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
@@ -68,12 +103,14 @@
         .header__inner { display: flex; justify-content: space-between; align-items: center; height: 100%; padding: 0 40px; }
         .header__logo a { font-family: var(--font-jp); font-size: 1.5rem; color: var(--color-white); font-weight: bold; }
         .header__logo span { font-size: 0.8rem; font-weight: normal; }
-        .header__list { display: flex; gap: 30px; }
-        .header__item a { font-family: var(--font-en); font-size: 0.85rem; color: var(--color-white); letter-spacing: 0.1em; position: relative; }
+        .header__nav { display: flex; align-items: center; }
+        .header__list { display: flex; gap: 30px; align-items: center; }
+        .header__item a { font-family: var(--font-jp); font-weight: 500; font-size: 0.9rem; color: var(--color-white); letter-spacing: 0.05em; position: relative; }
         .header__item a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background-color: currentColor; transition: width 0.3s; }
         .header__item a:hover::after { width: 100%; }
         .header__item--btn a { padding: 10px 20px; border: 1px solid currentColor; }
         .header__item--btn a:hover::after { display: none; }
+        
         .header__hamburger { display: none; width: 30px; height: 20px; position: relative; background: none; border: none; cursor: pointer; z-index: 1100; }
         .header__hamburger span { position: absolute; width: 100%; height: 2px; background-color: var(--color-white); transition: all 0.3s; }
         .header__hamburger span:nth-child(1) { top: 0; }
@@ -157,6 +194,9 @@
 
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+        
+        /* Helper Text classes */
+        .u-text-sm { font-size: 0.9rem; font-weight: normal; }
 
         /* Mobile */
         @media (max-width: 1024px) {
@@ -164,6 +204,8 @@
             .header.is-active .header__nav { right: 0; }
             .header__list { flex-direction: column; gap: 40px; align-items: center; }
             .header__item a { color: var(--color-text); font-size: 1.2rem; }
+            .header__lang-btn { margin-left: 0; margin-top: 30px; color: var(--color-text); border-color: var(--color-text); }
+            
             .header__hamburger { display: block; }
             .header.is-active .header__hamburger span { background-color: var(--color-text); }
             .header.is-active .header__hamburger span:nth-child(1) { top: 50%; transform: rotate(45deg); }
@@ -195,15 +237,17 @@
             </h1>
             <nav class="header__nav" id="js-nav">
                 <ul class="header__list">
-                    <li class="header__item"><a href="#plan">PLAN</a></li>
-                    <li class="header__item"><a href="#concept">CONCEPT</a></li>
-                    <li class="header__item"><a href="#guestroom">GUEST ROOM</a></li>
-                    <li class="header__item"><a href="#howto">HOW TO ENJOY</a></li>
-                    <li class="header__item"><a href="#voice">VOICE</a></li>
-                    <li class="header__item"><a href="#news">NEWS</a></li>
-                    <li class="header__item"><a href="#access">ACCESS</a></li>
-                    <li class="header__item header__item--btn"><a href="#reservation">RESERVE</a></li>
+                    <li class="header__item"><a href="#plan"><span class="lang-jp">宿泊プラン</span><span class="lang-en">PLAN</span></a></li>
+                    <li class="header__item"><a href="#concept"><span class="lang-jp">コンセプト</span><span class="lang-en">CONCEPT</span></a></li>
+                    <li class="header__item"><a href="#guestroom"><span class="lang-jp">客室・設備</span><span class="lang-en">ROOMS</span></a></li>
+                    <li class="header__item"><a href="#howto"><span class="lang-jp">過ごし方</span><span class="lang-en">ENJOY</span></a></li>
+                    <li class="header__item"><a href="#voice"><span class="lang-jp">お客様の声</span><span class="lang-en">VOICE</span></a></li>
+                    <li class="header__item"><a href="#news"><span class="lang-jp">お知らせ</span><span class="lang-en">NEWS</span></a></li>
+                    <li class="header__item"><a href="#access"><span class="lang-jp">アクセス</span><span class="lang-en">ACCESS</span></a></li>
+                    <li class="header__item header__item--btn"><a href="#reservation"><span class="lang-jp">ご予約</span><span class="lang-en">RESERVE</span></a></li>
                 </ul>
+                <!-- 言語切り替えボタン -->
+                <button id="js-lang-switch" class="header__lang-btn">🌐 <span id="js-lang-text">English</span></button>
             </nav>
             <button class="header__hamburger" id="js-hamburger" aria-label="メニューを開く">
                 <span></span>
@@ -220,11 +264,22 @@
         </div>
         <div class="hero__content">
             <p class="hero__sub-en">A private seaside kominka stay in Nishi-Kawana, Tateyama.</p>
-            <h2 class="hero__title">海辺に佇む、<br>貸切の古民家宿。</h2>
-            <p class="hero__sub-jp">千葉・南房総 西川名。<br>海と静けさに包まれる、一棟貸しの宿。</p>
+            
+            <!-- 日本語メインコピー -->
+            <div class="lang-jp">
+                <h2 class="hero__title">海辺に佇む、<br>貸切の古民家宿。</h2>
+                <p class="hero__sub-jp">千葉・南房総 西川名。<br>海と静けさに包まれる、一棟貸しの宿。</p>
+            </div>
+            
+            <!-- 英語メインコピー -->
+            <div class="lang-en">
+                <h2 class="hero__title">Private Kominka<br>by the Sea.</h2>
+                <p class="hero__sub-jp">Experience the silence of the sea and the warmth of tradition<br>in Nishi-Kawana, Minamiboso.</p>
+            </div>
+
             <div class="hero__actions">
-                <a href="#plan" class="btn btn--outline">プランを見る</a>
-                <a href="#reservation" class="btn btn--primary">予約・お問い合わせ</a>
+                <a href="#plan" class="btn btn--outline"><span class="lang-jp">プランを見る</span><span class="lang-en">View Plans</span></a>
+                <a href="#reservation" class="btn btn--primary"><span class="lang-jp">予約・お問い合わせ</span><span class="lang-en">Book Now</span></a>
             </div>
         </div>
         <div class="hero__scroll">SCROLL</div>
@@ -236,7 +291,10 @@
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">PLAN</span>
-                    <h2 class="section-header__jp">プラン・ご宿泊</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">プラン・ご宿泊</span>
+                        <span class="lang-en">Accommodation Plans</span>
+                    </h2>
                 </div>
                 <div class="grid grid--3">
                     <article class="card plan-card fade-in">
@@ -244,10 +302,13 @@
                             <img src="https://placehold.co/600x400/e0e0e0/333?text=Basic+Plan" alt="基本宿泊プラン" class="card__img">
                         </div>
                         <div class="card__body">
-                            <h3 class="card__title">基本宿泊プラン</h3>
-                            <p class="card__price">¥25,000〜 / 棟</p>
-                            <p class="card__text">一棟貸切のスタンダードなプランです。海辺の暮らしを暮らすように楽しむ基本コース。</p>
-                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                            <h3 class="card__title"><span class="lang-jp">基本宿泊プラン</span><span class="lang-en">Standard Plan</span></h3>
+                            <p class="card__price">¥25,000〜 / <span class="lang-jp">棟</span><span class="lang-en">Night</span></p>
+                            <p class="card__text">
+                                <span class="lang-jp">一棟貸切のスタンダードなプランです。海辺の暮らしを暮らすように楽しむ基本コース。</span>
+                                <span class="lang-en">A standard plan for a private house rental. Enjoy seaside living like a local.</span>
+                            </p>
+                            <a href="#reservation" class="btn btn--sm"><span class="lang-jp">このプランで相談</span><span class="lang-en">Book This Plan</span></a>
                         </div>
                     </article>
                     <article class="card plan-card fade-in">
@@ -255,10 +316,13 @@
                             <img src="https://placehold.co/600x400/e0e0e0/333?text=Weekday+Plan" alt="平日ゆったりプラン" class="card__img">
                         </div>
                         <div class="card__body">
-                            <h3 class="card__title">平日ゆったりプラン</h3>
-                            <p class="card__price">¥18,000〜 / 棟</p>
-                            <p class="card__text">平日限定のお得なプラン。ワーケーションや静かな創作活動にも最適です。</p>
-                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                            <h3 class="card__title"><span class="lang-jp">平日ゆったりプラン</span><span class="lang-en">Weekday Special</span></h3>
+                            <p class="card__price">¥18,000〜 / <span class="lang-jp">棟</span><span class="lang-en">Night</span></p>
+                            <p class="card__text">
+                                <span class="lang-jp">平日限定のお得なプラン。ワーケーションや静かな創作活動にも最適です。</span>
+                                <span class="lang-en">Great value for weekdays. Ideal for workations or quiet creative activities.</span>
+                            </p>
+                            <a href="#reservation" class="btn btn--sm"><span class="lang-jp">このプランで相談</span><span class="lang-en">Book This Plan</span></a>
                         </div>
                     </article>
                     <article class="card plan-card fade-in">
@@ -266,10 +330,13 @@
                             <img src="https://placehold.co/600x400/e0e0e0/333?text=Long+Stay" alt="連泊・長期滞在プラン" class="card__img">
                         </div>
                         <div class="card__body">
-                            <h3 class="card__title">連泊・長期滞在プラン</h3>
-                            <p class="card__price">お問い合わせ</p>
-                            <p class="card__text">2泊以上のご利用で割引適用。南房総の拠として、ゆっくりと過ごしたい方向け。</p>
-                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                            <h3 class="card__title"><span class="lang-jp">連泊・長期滞在プラン</span><span class="lang-en">Long Stay Plan</span></h3>
+                            <p class="card__price"><span class="lang-jp">お問い合わせ</span><span class="lang-en">Contact Us</span></p>
+                            <p class="card__text">
+                                <span class="lang-jp">2泊以上のご利用で割引適用。南房総の拠として、ゆっくりと過ごしたい方向け。</span>
+                                <span class="lang-en">Discount for 2+ nights. For those who want to stay longer and relax in Minamiboso.</span>
+                            </p>
+                            <a href="#reservation" class="btn btn--sm"><span class="lang-jp">このプランで相談</span><span class="lang-en">Book This Plan</span></a>
                         </div>
                     </article>
                 </div>
@@ -285,8 +352,12 @@
                 <div class="concept__content fade-in">
                     <div class="section-header section-header--left">
                         <span class="section-header__en">CONCEPT</span>
-                        <h2 class="section-header__jp">海辺の古民家<br>一棟貸しの宿</h2>
+                        <h2 class="section-header__jp">
+                            <span class="lang-jp">海辺の古民家<br>一棟貸しの宿</span>
+                            <span class="lang-en">Private Kominka<br>By the Sea</span>
+                        </h2>
                     </div>
+                    <!-- コンセプト本文は日本語のままとします（必要に応じて翻訳を追加可能） -->
                     <p class="text-body">
                         波の音がBGMになる、海辺の静かな集落。<br>
                         「藤ゼム」は、千葉県館山市西川名にある、築数十年を経た古民家を一棟貸し切りでご利用いただけるお宿です。
@@ -309,31 +380,34 @@
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">GUEST ROOM</span>
-                    <h2 class="section-header__jp">客室・設備</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">客室・設備</span>
+                        <span class="lang-en">Rooms & Facilities</span>
+                    </h2>
                 </div>
                 <div class="grid grid--2">
                     <div class="guestroom__item fade-in">
                         <img src="https://placehold.co/800x500/d2b48c/333?text=Japanese+Room" alt="和室スペース" class="guestroom__img">
-                        <h3 class="guestroom__sub-title">和室・リビング</h3>
+                        <h3 class="guestroom__sub-title"><span class="lang-jp">和室・リビング</span><span class="lang-en">Tatami Room & Living</span></h3>
                         <p>畳の香りが心地よい和室と、みんなで寛げるリビングスペース。</p>
                     </div>
                     <div class="guestroom__item fade-in">
                         <img src="https://placehold.co/800x500/d2b48c/333?text=Kitchen" alt="キッチンスペース" class="guestroom__img">
-                        <h3 class="guestroom__sub-title">キッチン・水回り</h3>
+                        <h3 class="guestroom__sub-title"><span class="lang-jp">キッチン・水回り</span><span class="lang-en">Kitchen & Utilities</span></h3>
                         <p>地元の食材を持ち込んで料理ができる、調理器具完備のキッチン。</p>
                     </div>
                 </div>
                 <div class="facility-box fade-in">
-                    <h3 class="facility-box__title">主な設備・アメニティ</h3>
+                    <h3 class="facility-box__title"><span class="lang-jp">主な設備・アメニティ</span><span class="lang-en">Amenities</span></h3>
                     <ul class="facility-list">
-                        <li>寝具一式（布団）</li>
-                        <li>キッチン（ガスコンロ・冷蔵庫・電子レンジ）</li>
-                        <li>調理器具・食器類</li>
-                        <li>バス・トイレ（ウォシュレット付）</li>
-                        <li>ヘアドライヤー</li>
-                        <li>タオル類</li>
-                        <li>無料Wi-Fi</li>
-                        <li>駐車場（2台分）</li>
+                        <li>寝具一式（布団） / Futon Bedding</li>
+                        <li>キッチン（ガスコンロ・冷蔵庫・電子レンジ） / Kitchen</li>
+                        <li>調理器具・食器類 / Cookware & Tableware</li>
+                        <li>バス・トイレ（ウォシュレット付） / Bath & Toilet</li>
+                        <li>ヘアドライヤー / Hair Dryer</li>
+                        <li>タオル類 / Towels</li>
+                        <li>無料Wi-Fi / Free Wi-Fi</li>
+                        <li>駐車場（2台分） / Parking (2 cars)</li>
                     </ul>
                 </div>
             </div>
@@ -344,7 +418,10 @@
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">HOW TO ENJOY</span>
-                    <h2 class="section-header__jp">藤ゼムでの過ごし方</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">藤ゼムでの過ごし方</span>
+                        <span class="lang-en">How to Enjoy</span>
+                    </h2>
                 </div>
                 <div class="howto__steps">
                     <div class="howto__step fade-in">
@@ -353,7 +430,7 @@
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">15:00 - Sunset</span>
-                            <h3>到着・海辺の散歩</h3>
+                            <h3><span class="lang-jp">到着・海辺の散歩</span><span class="lang-en">Arrival & Seaside Walk</span></h3>
                             <p>チェックイン後は、すぐ近くの海へ。潮だまりの観察や、夕日が沈むマジックアワーを堪能。</p>
                         </div>
                     </div>
@@ -363,7 +440,7 @@
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">18:00 - Dinner</span>
-                            <h3>自炊・持ち寄りディナー</h3>
+                            <h3><span class="lang-jp">自炊・持ち寄りディナー</span><span class="lang-en">Cooking Dinner</span></h3>
                             <p>近くの直売所で買った新鮮な野菜や魚を使って、キッチンでわいわい料理を楽しむ時間。</p>
                         </div>
                     </div>
@@ -373,7 +450,7 @@
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">21:00 - Relax</span>
-                            <h3>静寂と星空</h3>
+                            <h3><span class="lang-jp">静寂と星空</span><span class="lang-en">Silence & Starry Sky</span></h3>
                             <p>集落の夜はとても静かです。波の音を聞きながら読書をしたり、外に出て満点の星空を眺めたり。</p>
                         </div>
                     </div>
@@ -386,19 +463,22 @@
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">VOICE</span>
-                    <h2 class="section-header__jp">ご宿泊された方の声</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">ご宿泊された方の声</span>
+                        <span class="lang-en">Guest Reviews</span>
+                    </h2>
                 </div>
                 <div class="grid grid--3">
                     <div class="voice-card fade-in">
-                        <p class="voice-card__meta">2024年8月 / 40代ご夫婦</p>
+                        <p class="voice-card__meta">2024.08 / <span class="lang-jp">40代ご夫婦</span><span class="lang-en">Couple</span></p>
                         <p class="voice-card__text">「本当に海が近くて驚きました。夜は波の音しか聞こえない静けさで、久しぶりによく眠れました。古民家の雰囲気も懐かしくて素敵です。」</p>
                     </div>
                     <div class="voice-card fade-in">
-                        <p class="voice-card__meta">2024年9月 / 友人グループ</p>
+                        <p class="voice-card__meta">2024.09 / <span class="lang-jp">友人グループ</span><span class="lang-en">Group</span></p>
                         <p class="voice-card__text">「キッチンが広くて使いやすかったです。地元のスーパーで魚を買って料理しました。一棟貸しなので周りを気にせず過ごせたのが良かったです。」</p>
                     </div>
                     <div class="voice-card fade-in">
-                        <p class="voice-card__meta">2024年10月 / 家族連れ</p>
+                        <p class="voice-card__meta">2024.10 / <span class="lang-jp">家族連れ</span><span class="lang-en">Family</span></p>
                         <p class="voice-card__text">「子供たちにとって初めての古民家体験でした。おばあちゃんの家に来たみたい！と喜んでいました。また夏に来たいです。」</p>
                     </div>
                 </div>
@@ -410,7 +490,10 @@
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">NEWS</span>
-                    <h2 class="section-header__jp">お知らせ</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">お知らせ</span>
+                        <span class="lang-en">News</span>
+                    </h2>
                 </div>
                 <div class="news__list">
                     <article class="news__item fade-in">
@@ -431,30 +514,31 @@
             </div>
         </section>
 
-        <!-- ACCESS セクション (Updated) -->
+        <!-- ACCESS セクション -->
         <section id="access" class="section access">
             <div class="container">
                 <div class="section-header fade-in">
                     <span class="section-header__en">ACCESS</span>
-                    <h2 class="section-header__jp">アクセス</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">アクセス</span>
+                        <span class="lang-en">Access</span>
+                    </h2>
                 </div>
                 <div class="access__content fade-in">
                     <div class="access__info">
                         <h3 class="access__name">藤ゼム（トウゼム）<br><span class="u-text-sm">海辺の古民家一棟貸し宿</span></h3>
                         <p class="access__address">〒294-0315 千葉県館山市西川名１８４−１</p>
                         <dl class="access__dl">
-                            <dt>お車で</dt>
+                            <dt><span class="lang-jp">お車で</span><span class="lang-en">Car</span></dt>
                             <dd>富津館山道路「富浦IC」より約25分</dd>
-                            <dt>交通機関で</dt>
+                            <dt><span class="lang-jp">交通機関で</span><span class="lang-en">Train/Bus</span></dt>
                             <dd>JR内房線「館山駅」よりJRバスまたはタクシーで約20分</dd>
                         </dl>
-                        <!-- 追加：アプリで開くボタン -->
                         <div style="margin-top: 20px;">
-                            <a href="https://maps.app.goo.gl/8FqCo4cHjJ277KXC8" target="_blank" class="btn btn--sm">Googleマップアプリで開く</a>
+                            <a href="https://maps.app.goo.gl/8FqCo4cHjJ277KXC8" target="_blank" class="btn btn--sm"><span class="lang-jp">Googleマップアプリで開く</span><span class="lang-en">Open in Google Maps</span></a>
                         </div>
                     </div>
                     <div class="access__map">
-                        <!-- 更新：住所ベースの埋め込み -->
                         <iframe src="https://maps.google.com/maps?q=千葉県館山市西川名184-1&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
@@ -466,30 +550,35 @@
             <div class="container container--narrow">
                 <div class="section-header fade-in">
                     <span class="section-header__en">RESERVATION</span>
-                    <h2 class="section-header__jp">ご予約・お問い合わせ</h2>
+                    <h2 class="section-header__jp">
+                        <span class="lang-jp">ご予約・お問い合わせ</span>
+                        <span class="lang-en">Reservation / Contact</span>
+                    </h2>
                 </div>
                 <div class="reservation__lead fade-in">
-                    <p>公式サイトからの直接ご予約・お問い合わせを承っております。<br>
-                    以下のフォーム、またはLINEよりお気軽にご連絡ください。</p>
+                    <p>
+                        <span class="lang-jp">公式サイトからの直接ご予約・お問い合わせを承っております。<br>以下のフォーム、またはLINEよりお気軽にご連絡ください。</span>
+                        <span class="lang-en">We accept direct reservations and inquiries via the form below or LINE.</span>
+                    </p>
                 </div>
                 <div class="reservation__line fade-in">
-                    <a href="#" class="btn btn--line">LINEで問い合わせる</a>
+                    <a href="#" class="btn btn--line"><span class="lang-jp">LINEで問い合わせる</span><span class="lang-en">Contact via LINE</span></a>
                 </div>
                 <form action="#" method="post" class="form fade-in">
                     <div class="form__item">
-                        <label for="name" class="form__label">お名前 <span class="required">必須</span></label>
+                        <label for="name" class="form__label"><span class="lang-jp">お名前</span><span class="lang-en">Name</span> <span class="required">*</span></label>
                         <input type="text" id="name" name="name" class="form__input" required placeholder="山田 太郎">
                     </div>
                     <div class="form__item">
-                        <label for="email" class="form__label">メールアドレス <span class="required">必須</span></label>
+                        <label for="email" class="form__label"><span class="lang-jp">メールアドレス</span><span class="lang-en">Email</span> <span class="required">*</span></label>
                         <input type="email" id="email" name="email" class="form__input" required placeholder="info@example.com">
                     </div>
                     <div class="form__item">
-                        <label for="tel" class="form__label">電話番号</label>
+                        <label for="tel" class="form__label"><span class="lang-jp">電話番号</span><span class="lang-en">Phone</span></label>
                         <input type="tel" id="tel" name="tel" class="form__input" placeholder="090-1234-5678">
                     </div>
                     <div class="form__item">
-                        <label class="form__label">ご希望宿泊日</label>
+                        <label class="form__label"><span class="lang-jp">ご希望宿泊日</span><span class="lang-en">Check-in / Out</span></label>
                         <div class="form__group-date">
                             <input type="date" name="checkin" class="form__input">
                             <span>〜</span>
@@ -497,21 +586,21 @@
                         </div>
                     </div>
                     <div class="form__item">
-                        <label for="plan-select" class="form__label">ご希望プラン</label>
+                        <label for="plan-select" class="form__label"><span class="lang-jp">ご希望プラン</span><span class="lang-en">Plan</span></label>
                         <select id="plan-select" name="plan" class="form__select">
-                            <option value="">選択してください</option>
-                            <option value="basic">基本宿泊プラン</option>
-                            <option value="weekday">平日ゆったりプラン</option>
-                            <option value="long">連泊・長期滞在プラン</option>
-                            <option value="other">その他・未定</option>
+                            <option value="">Select Plan</option>
+                            <option value="basic">基本宿泊プラン / Basic Plan</option>
+                            <option value="weekday">平日ゆったりプラン / Weekday Plan</option>
+                            <option value="long">連泊・長期滞在プラン / Long Stay</option>
+                            <option value="other">その他・未定 / Other</option>
                         </select>
                     </div>
                     <div class="form__item">
-                        <label for="message" class="form__label">お問い合わせ内容</label>
-                        <textarea id="message" name="message" class="form__textarea" rows="6" placeholder="人数やご質問などをご記入ください"></textarea>
+                        <label for="message" class="form__label"><span class="lang-jp">お問い合わせ内容</span><span class="lang-en">Message</span></label>
+                        <textarea id="message" name="message" class="form__textarea" rows="6" placeholder=""></textarea>
                     </div>
                     <div class="form__submit">
-                        <button type="submit" class="btn btn--primary btn--wide">送信する</button>
+                        <button type="submit" class="btn btn--primary btn--wide"><span class="lang-jp">送信する</span><span class="lang-en">Send Message</span></button>
                     </div>
                 </form>
             </div>
@@ -527,9 +616,9 @@
                     <p>海辺の古民家一棟貸し宿</p>
                 </div>
                 <ul class="footer__links">
-                    <li><a href="#plan">宿泊プラン</a></li>
-                    <li><a href="#access">アクセス</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
+                    <li><a href="#plan"><span class="lang-jp">宿泊プラン</span><span class="lang-en">Plans</span></a></li>
+                    <li><a href="#access"><span class="lang-jp">アクセス</span><span class="lang-en">Access</span></a></li>
+                    <li><a href="#"><span class="lang-jp">プライバシーポリシー</span><span class="lang-en">Privacy Policy</span></a></li>
                 </ul>
             </div>
             <p class="footer__copyright">&copy; 2024 TOZEM. All Rights Reserved.</p>
@@ -538,22 +627,26 @@
 
     <script>
         /* =========================================
-           JavaScript (Merged)
+           JavaScript (Updated)
            ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
+            // --- 基本機能 ---
             const header = document.getElementById('header');
             const hamburger = document.getElementById('js-hamburger');
             const nav = document.getElementById('js-nav');
             const navLinks = nav.querySelectorAll('a');
 
+            // スクロール検知
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) header.classList.add('is-scrolled');
                 else header.classList.remove('is-scrolled');
             });
 
+            // ハンバーガーメニュー
             hamburger.addEventListener('click', () => header.classList.toggle('is-active'));
             navLinks.forEach(link => link.addEventListener('click', () => header.classList.remove('is-active')));
 
+            // スムーススクロール
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -569,6 +662,7 @@
                 });
             });
 
+            // フェードインアニメーション
             const fadeObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -577,8 +671,23 @@
                     }
                 });
             }, { rootMargin: '0px', threshold: 0.15 });
-
             document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+            // --- 言語切り替え機能 (Language Switcher) ---
+            const langBtn = document.getElementById('js-lang-switch');
+            const langText = document.getElementById('js-lang-text');
+            
+            langBtn.addEventListener('click', () => {
+                // bodyにクラスを付け外ししてCSSで表示制御
+                document.body.classList.toggle('is-english');
+                
+                // ボタンのテキストも変更
+                if (document.body.classList.contains('is-english')) {
+                    langText.textContent = '日本語'; // 英語モードの時は「日本語に戻す」ボタンになる
+                } else {
+                    langText.textContent = 'English'; // 日本語モードの時は「英語にする」ボタンになる
+                }
+            });
         });
     </script>
 </body>
