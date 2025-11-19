@@ -13,7 +13,7 @@
 
     <style>
         /* =========================================
-           CSS Styles (Updated for Language Switch)
+           CSS Styles (Language Switch & Images)
            ========================================= */
         :root {
             --color-bg: #f9f8f4;
@@ -39,15 +39,10 @@
         ul { list-style: none; }
 
         /* Language Switch Logic */
-        /* デフォルトは日本語表示・英語非表示 */
         .lang-en { display: none; }
         .lang-jp { display: block; }
-
-        /* bodyに .is-english クラスがついた時は逆転 */
         body.is-english .lang-en { display: block; }
         body.is-english .lang-jp { display: none; }
-        
-        /* インライン要素用の切替設定 */
         span.lang-en, span.lang-jp { display: none; }
         body:not(.is-english) span.lang-jp { display: inline; }
         body.is-english span.lang-en { display: inline; }
@@ -134,8 +129,8 @@
         /* Components */
         .plan-card { background: var(--color-white); box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; }
         .plan-card:hover { transform: translateY(-5px); }
-        .card__img-wrapper { overflow: hidden; }
-        .card__img { transition: transform 0.5s; }
+        .card__img-wrapper { overflow: hidden; height: 250px; } /* Fixed height for consistent cards */
+        .card__img { transition: transform 0.5s; width: 100%; height: 100%; object-fit: cover; }
         .plan-card:hover .card__img { transform: scale(1.05); }
         .card__body { padding: 30px; text-align: center; }
         .card__title { font-family: var(--font-jp); font-size: 1.2rem; margin-bottom: 10px; }
@@ -143,10 +138,13 @@
         .card__text { font-size: 0.9rem; text-align: left; margin-bottom: 20px; color: var(--color-text-light); }
 
         .concept__container { display: flex; align-items: center; gap: 60px; }
-        .concept__img, .concept__content { flex: 1; }
+        .concept__img { flex: 1; overflow: hidden; border-radius: 4px; }
+        .concept__img img { width: 100%; height: auto; transition: transform 0.5s; }
+        .concept__img:hover img { transform: scale(1.02); }
+        .concept__content { flex: 1; }
         .text-body { margin-bottom: 1.5em; text-align: justify; }
 
-        .guestroom__img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; }
+        .guestroom__img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; border-radius: 4px; }
         .guestroom__sub-title { font-family: var(--font-jp); font-size: 1.2rem; margin-bottom: 10px; }
         .facility-box { background-color: var(--color-white); padding: 40px; margin-top: 60px; border: 1px solid var(--color-border); }
         .facility-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; list-style: disc; list-style-position: inside; }
@@ -155,7 +153,7 @@
         .howto__step { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; }
         .howto__step:nth-child(even) { flex-direction: row-reverse; }
         .howto__img { flex: 0 0 300px; }
-        .howto__img img { width: 100%; border-radius: 50%; aspect-ratio: 1; object-fit: cover; }
+        .howto__img img { width: 100%; border-radius: 50%; aspect-ratio: 1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .howto__text { flex: 1; }
         .howto__time { font-family: var(--font-en); color: var(--color-accent); display: block; margin-bottom: 5px; }
         .howto__text h3 { font-family: var(--font-jp); font-size: 1.3rem; margin-bottom: 15px; }
@@ -194,18 +192,14 @@
 
         .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .fade-in.is-visible { opacity: 1; transform: translateY(0); }
-        
-        /* Helper Text classes */
         .u-text-sm { font-size: 0.9rem; font-weight: normal; }
 
-        /* Mobile */
         @media (max-width: 1024px) {
             .header__nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background-color: var(--color-bg); flex-direction: column; justify-content: center; transition: right 0.4s ease; }
             .header.is-active .header__nav { right: 0; }
             .header__list { flex-direction: column; gap: 40px; align-items: center; }
             .header__item a { color: var(--color-text); font-size: 1.2rem; }
             .header__lang-btn { margin-left: 0; margin-top: 30px; color: var(--color-text); border-color: var(--color-text); }
-            
             .header__hamburger { display: block; }
             .header.is-active .header__hamburger span { background-color: var(--color-text); }
             .header.is-active .header__hamburger span:nth-child(1) { top: 50%; transform: rotate(45deg); }
@@ -246,7 +240,6 @@
                     <li class="header__item"><a href="#access"><span class="lang-jp">アクセス</span><span class="lang-en">ACCESS</span></a></li>
                     <li class="header__item header__item--btn"><a href="#reservation"><span class="lang-jp">ご予約</span><span class="lang-en">RESERVE</span></a></li>
                 </ul>
-                <!-- 言語切り替えボタン -->
                 <button id="js-lang-switch" class="header__lang-btn">🌐 <span id="js-lang-text">English</span></button>
             </nav>
             <button class="header__hamburger" id="js-hamburger" aria-label="メニューを開く">
@@ -260,23 +253,19 @@
     <!-- ヒーローセクション -->
     <section class="hero">
         <div class="hero__bg">
-            <img src="https://placehold.co/1920x1080/556b2f/ffffff?text=Hero+Image+(Sea+or+Kominka)" alt="海辺の古民家 藤ゼムのイメージ" class="hero__img">
+            <!-- Unsplash Image: Japanese Room / Garden vibe -->
+            <img src="https://images.unsplash.com/photo-1596416095928-6b0645476198?auto=format&fit=crop&w=1920&q=80" alt="古民家の縁側と庭" class="hero__img">
         </div>
         <div class="hero__content">
             <p class="hero__sub-en">A private seaside kominka stay in Nishi-Kawana, Tateyama.</p>
-            
-            <!-- 日本語メインコピー -->
             <div class="lang-jp">
                 <h2 class="hero__title">海辺に佇む、<br>貸切の古民家宿。</h2>
                 <p class="hero__sub-jp">千葉・南房総 西川名。<br>海と静けさに包まれる、一棟貸しの宿。</p>
             </div>
-            
-            <!-- 英語メインコピー -->
             <div class="lang-en">
                 <h2 class="hero__title">Private Kominka<br>by the Sea.</h2>
                 <p class="hero__sub-jp">Experience the silence of the sea and the warmth of tradition<br>in Nishi-Kawana, Minamiboso.</p>
             </div>
-
             <div class="hero__actions">
                 <a href="#plan" class="btn btn--outline"><span class="lang-jp">プランを見る</span><span class="lang-en">View Plans</span></a>
                 <a href="#reservation" class="btn btn--primary"><span class="lang-jp">予約・お問い合わせ</span><span class="lang-en">Book Now</span></a>
@@ -299,7 +288,8 @@
                 <div class="grid grid--3">
                     <article class="card plan-card fade-in">
                         <div class="card__img-wrapper">
-                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Basic+Plan" alt="基本宿泊プラン" class="card__img">
+                            <!-- Image: Relaxing / Vacation -->
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="基本宿泊プラン" class="card__img">
                         </div>
                         <div class="card__body">
                             <h3 class="card__title"><span class="lang-jp">基本宿泊プラン</span><span class="lang-en">Standard Plan</span></h3>
@@ -313,7 +303,8 @@
                     </article>
                     <article class="card plan-card fade-in">
                         <div class="card__img-wrapper">
-                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Weekday+Plan" alt="平日ゆったりプラン" class="card__img">
+                            <!-- Image: Laptop / Workation -->
+                            <img src="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=600&q=80" alt="平日ゆったりプラン" class="card__img">
                         </div>
                         <div class="card__body">
                             <h3 class="card__title"><span class="lang-jp">平日ゆったりプラン</span><span class="lang-en">Weekday Special</span></h3>
@@ -327,7 +318,8 @@
                     </article>
                     <article class="card plan-card fade-in">
                         <div class="card__img-wrapper">
-                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Long+Stay" alt="連泊・長期滞在プラン" class="card__img">
+                            <!-- Image: Travel / Luggage -->
+                            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=600&q=80" alt="連泊・長期滞在プラン" class="card__img">
                         </div>
                         <div class="card__body">
                             <h3 class="card__title"><span class="lang-jp">連泊・長期滞在プラン</span><span class="lang-en">Long Stay Plan</span></h3>
@@ -347,7 +339,8 @@
         <section id="concept" class="section concept">
             <div class="container concept__container">
                 <div class="concept__img fade-in">
-                    <img src="https://placehold.co/800x1000/1e3d59/ffffff?text=Concept+Image" alt="海辺の静けさと古民家の佇まい">
+                    <!-- Image: Japanese architecture detail -->
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" alt="海辺の静けさと古民家の佇まい">
                 </div>
                 <div class="concept__content fade-in">
                     <div class="section-header section-header--left">
@@ -357,7 +350,6 @@
                             <span class="lang-en">Private Kominka<br>By the Sea</span>
                         </h2>
                     </div>
-                    <!-- コンセプト本文は日本語のままとします（必要に応じて翻訳を追加可能） -->
                     <p class="text-body">
                         波の音がBGMになる、海辺の静かな集落。<br>
                         「藤ゼム」は、千葉県館山市西川名にある、築数十年を経た古民家を一棟貸し切りでご利用いただけるお宿です。
@@ -387,12 +379,14 @@
                 </div>
                 <div class="grid grid--2">
                     <div class="guestroom__item fade-in">
-                        <img src="https://placehold.co/800x500/d2b48c/333?text=Japanese+Room" alt="和室スペース" class="guestroom__img">
+                        <!-- Image: Tatami Room -->
+                        <img src="https://images.unsplash.com/photo-1545048702-79362596cdc9?auto=format&fit=crop&w=800&q=80" alt="和室スペース" class="guestroom__img">
                         <h3 class="guestroom__sub-title"><span class="lang-jp">和室・リビング</span><span class="lang-en">Tatami Room & Living</span></h3>
                         <p>畳の香りが心地よい和室と、みんなで寛げるリビングスペース。</p>
                     </div>
                     <div class="guestroom__item fade-in">
-                        <img src="https://placehold.co/800x500/d2b48c/333?text=Kitchen" alt="キッチンスペース" class="guestroom__img">
+                        <!-- Image: Kitchen / Dining -->
+                        <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80" alt="キッチンスペース" class="guestroom__img">
                         <h3 class="guestroom__sub-title"><span class="lang-jp">キッチン・水回り</span><span class="lang-en">Kitchen & Utilities</span></h3>
                         <p>地元の食材を持ち込んで料理ができる、調理器具完備のキッチン。</p>
                     </div>
@@ -426,7 +420,8 @@
                 <div class="howto__steps">
                     <div class="howto__step fade-in">
                         <div class="howto__img">
-                            <img src="https://placehold.co/300x300/87ceeb/333?text=Walk" alt="散歩">
+                            <!-- Image: Beach -->
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" alt="散歩">
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">15:00 - Sunset</span>
@@ -436,7 +431,8 @@
                     </div>
                     <div class="howto__step fade-in">
                         <div class="howto__img">
-                            <img src="https://placehold.co/300x300/ffdab9/333?text=Dinner" alt="夕食">
+                            <!-- Image: Cooking Pot -->
+                            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=300&q=80" alt="夕食">
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">18:00 - Dinner</span>
@@ -446,7 +442,8 @@
                     </div>
                     <div class="howto__step fade-in">
                         <div class="howto__img">
-                            <img src="https://placehold.co/300x300/191970/ffffff?text=Night" alt="夜">
+                            <!-- Image: Starry Night -->
+                            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=300&q=80" alt="夜">
                         </div>
                         <div class="howto__text">
                             <span class="howto__time">21:00 - Relax</span>
@@ -627,26 +624,22 @@
 
     <script>
         /* =========================================
-           JavaScript (Updated)
+           JavaScript (Language Switcher)
            ========================================= */
         document.addEventListener('DOMContentLoaded', () => {
-            // --- 基本機能 ---
             const header = document.getElementById('header');
             const hamburger = document.getElementById('js-hamburger');
             const nav = document.getElementById('js-nav');
             const navLinks = nav.querySelectorAll('a');
 
-            // スクロール検知
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) header.classList.add('is-scrolled');
                 else header.classList.remove('is-scrolled');
             });
 
-            // ハンバーガーメニュー
             hamburger.addEventListener('click', () => header.classList.toggle('is-active'));
             navLinks.forEach(link => link.addEventListener('click', () => header.classList.remove('is-active')));
 
-            // スムーススクロール
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -662,7 +655,6 @@
                 });
             });
 
-            // フェードインアニメーション
             const fadeObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -673,19 +665,16 @@
             }, { rootMargin: '0px', threshold: 0.15 });
             document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
 
-            // --- 言語切り替え機能 (Language Switcher) ---
+            // Language Switcher
             const langBtn = document.getElementById('js-lang-switch');
             const langText = document.getElementById('js-lang-text');
             
             langBtn.addEventListener('click', () => {
-                // bodyにクラスを付け外ししてCSSで表示制御
                 document.body.classList.toggle('is-english');
-                
-                // ボタンのテキストも変更
                 if (document.body.classList.contains('is-english')) {
-                    langText.textContent = '日本語'; // 英語モードの時は「日本語に戻す」ボタンになる
+                    langText.textContent = '日本語';
                 } else {
-                    langText.textContent = 'English'; // 日本語モードの時は「英語にする」ボタンになる
+                    langText.textContent = 'English';
                 }
             });
         });
