@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藤ゼム（トウゼム） – 海辺の古民家一棟貸し宿 | 千葉県館山市</title>
+    <meta name="description" content="千葉・南房総の西川名にある一棟貸しの古民家宿「藤ゼム（トウゼム）」。海辺の静けさと古民家のぬくもりに包まれる、貸切のプライベートな滞在をお楽しみください。">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           CSS Styles (Merged)
+           ========================================= */
+        :root {
+            --color-bg: #f9f8f4;
+            --color-text: #333333;
+            --color-text-light: #666666;
+            --color-primary: #1e3d59;
+            --color-accent: #556b2f;
+            --color-white: #ffffff;
+            --color-border: #e0e0e0;
+            --color-line: #06c755;
+            --font-jp: "Shippori Mincho", serif;
+            --font-en: "Montserrat", sans-serif;
+            --header-height: 80px;
+            --max-width: 1200px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: "Helvetica Neue", Arial, sans-serif; background-color: var(--color-bg); color: var(--color-text); line-height: 1.8; letter-spacing: 0.05em; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+        a:hover { opacity: 0.7; }
+        img { max-width: 100%; height: auto; display: block; }
+        ul { list-style: none; }
+
+        /* Layout & Components */
+        .container { width: 90%; max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        .container--narrow { max-width: 800px; }
+        .section { padding: 100px 0; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header--left { text-align: left; }
+        .section-header__en { display: block; font-family: var(--font-en); font-size: 0.9rem; color: var(--color-primary); letter-spacing: 0.15em; margin-bottom: 10px; text-transform: uppercase; }
+        .section-header__jp { font-family: var(--font-jp); font-size: 2rem; font-weight: 500; line-height: 1.4; }
+        .grid { display: grid; gap: 40px; }
+        .grid--2 { grid-template-columns: repeat(2, 1fr); }
+        .grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* Buttons */
+        .btn { display: inline-block; padding: 15px 40px; font-size: 1rem; border: 1px solid transparent; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .btn--primary { background-color: var(--color-primary); color: var(--color-white); }
+        .btn--primary:hover { background-color: #162a3f; }
+        .btn--outline { border-color: var(--color-white); color: var(--color-white); }
+        .btn--outline:hover { background-color: rgba(255,255,255,0.1); }
+        .btn--sm { padding: 10px 20px; font-size: 0.9rem; border: 1px solid var(--color-text); margin-top: 15px; }
+        .btn--sm:hover { background-color: var(--color-text); color: var(--color-white); }
+        .btn--line { background-color: var(--color-line); color: var(--color-white); font-weight: bold; border-radius: 4px; width: 100%; max-width: 300px; }
+        .btn--wide { width: 100%; max-width: 400px; }
+
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 1000; transition: background-color 0.4s ease; }
+        .header.is-scrolled { background-color: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .header.is-scrolled .header__logo a, .header.is-scrolled .header__item a { color: var(--color-text); }
+        .header__inner { display: flex; justify-content: space-between; align-items: center; height: 100%; padding: 0 40px; }
+        .header__logo a { font-family: var(--font-jp); font-size: 1.5rem; color: var(--color-white); font-weight: bold; }
+        .header__logo span { font-size: 0.8rem; font-weight: normal; }
+        .header__list { display: flex; gap: 30px; }
+        .header__item a { font-family: var(--font-en); font-size: 0.85rem; color: var(--color-white); letter-spacing: 0.1em; position: relative; }
+        .header__item a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px; background-color: currentColor; transition: width 0.3s; }
+        .header__item a:hover::after { width: 100%; }
+        .header__item--btn a { padding: 10px 20px; border: 1px solid currentColor; }
+        .header__item--btn a:hover::after { display: none; }
+        .header__hamburger { display: none; width: 30px; height: 20px; position: relative; background: none; border: none; cursor: pointer; z-index: 1100; }
+        .header__hamburger span { position: absolute; width: 100%; height: 2px; background-color: var(--color-white); transition: all 0.3s; }
+        .header__hamburger span:nth-child(1) { top: 0; }
+        .header__hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .header__hamburger span:nth-child(3) { bottom: 0; }
+        .header.is-scrolled .header__hamburger span { background-color: var(--color-text); }
+
+        /* Hero */
+        .hero { position: relative; height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; color: var(--color-white); }
+        .hero__bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .hero__bg::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); }
+        .hero__img { width: 100%; height: 100%; object-fit: cover; }
+        .hero__content { padding: 20px; z-index: 1; }
+        .hero__sub-en { font-family: var(--font-en); font-size: 0.9rem; letter-spacing: 0.2em; margin-bottom: 20px; text-transform: uppercase; }
+        .hero__title { font-family: var(--font-jp); font-size: 3.5rem; font-weight: 500; line-height: 1.3; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero__sub-jp { font-size: 1rem; margin-bottom: 40px; }
+        .hero__actions { display: flex; gap: 20px; justify-content: center; }
+        .hero__scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--font-en); font-size: 0.7rem; letter-spacing: 0.2em; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
+
+        /* Components */
+        .plan-card { background: var(--color-white); box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .plan-card:hover { transform: translateY(-5px); }
+        .card__img-wrapper { overflow: hidden; }
+        .card__img { transition: transform 0.5s; }
+        .plan-card:hover .card__img { transform: scale(1.05); }
+        .card__body { padding: 30px; text-align: center; }
+        .card__title { font-family: var(--font-jp); font-size: 1.2rem; margin-bottom: 10px; }
+        .card__price { color: var(--color-primary); font-family: var(--font-en); font-weight: 500; margin-bottom: 15px; }
+        .card__text { font-size: 0.9rem; text-align: left; margin-bottom: 20px; color: var(--color-text-light); }
+
+        .concept__container { display: flex; align-items: center; gap: 60px; }
+        .concept__img, .concept__content { flex: 1; }
+        .text-body { margin-bottom: 1.5em; text-align: justify; }
+
+        .guestroom__img { width: 100%; height: 300px; object-fit: cover; margin-bottom: 20px; }
+        .guestroom__sub-title { font-family: var(--font-jp); font-size: 1.2rem; margin-bottom: 10px; }
+        .facility-box { background-color: var(--color-white); padding: 40px; margin-top: 60px; border: 1px solid var(--color-border); }
+        .facility-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; list-style: disc; list-style-position: inside; }
+
+        .howto__steps { padding: 20px 0; }
+        .howto__step { display: flex; align-items: center; gap: 40px; margin-bottom: 60px; }
+        .howto__step:nth-child(even) { flex-direction: row-reverse; }
+        .howto__img { flex: 0 0 300px; }
+        .howto__img img { width: 100%; border-radius: 50%; aspect-ratio: 1; object-fit: cover; }
+        .howto__text { flex: 1; }
+        .howto__time { font-family: var(--font-en); color: var(--color-accent); display: block; margin-bottom: 5px; }
+        .howto__text h3 { font-family: var(--font-jp); font-size: 1.3rem; margin-bottom: 15px; }
+
+        .voice-card { background-color: var(--color-white); padding: 30px; border-radius: 8px; position: relative; }
+        .voice-card::before { content: "“"; position: absolute; top: -20px; left: 20px; font-size: 5rem; color: rgba(0,0,0,0.1); font-family: serif; }
+        .voice-card__meta { font-size: 0.8rem; color: var(--color-text-light); margin-bottom: 15px; border-bottom: 1px solid var(--color-border); padding-bottom: 10px; }
+        .voice-card__text { font-style: italic; }
+
+        .news__item { border-bottom: 1px solid var(--color-border); }
+        .news__link { display: flex; align-items: baseline; padding: 20px 0; gap: 20px; }
+        .news__link:hover { background-color: rgba(255,255,255,0.5); }
+        .news__date { font-family: var(--font-en); font-size: 0.9rem; color: var(--color-text-light); min-width: 100px; }
+        .news__cat { background-color: var(--color-accent); color: white; font-size: 0.7rem; padding: 2px 10px; border-radius: 2px; min-width: 80px; text-align: center; }
+
+        .access__content { display: flex; gap: 40px; background-color: var(--color-white); padding: 40px; }
+        .access__info, .access__map { flex: 1; }
+        .access__name { font-family: var(--font-jp); font-size: 1.5rem; margin-bottom: 20px; }
+        .access__dl dt { float: left; clear: left; width: 100px; font-weight: bold; margin-bottom: 10px; }
+        .access__dl dd { margin-left: 100px; margin-bottom: 10px; }
+
+        .form { background-color: var(--color-white); padding: 40px; }
+        .form__item { margin-bottom: 20px; }
+        .form__label { display: block; margin-bottom: 8px; font-weight: bold; }
+        .required { color: #d93025; font-size: 0.8rem; margin-left: 5px; }
+        .form__input, .form__select, .form__textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        .form__group-date { display: flex; gap: 10px; align-items: center; }
+        .form__submit { text-align: center; margin-top: 40px; }
+
+        .footer { background-color: #333; color: #fff; padding: 60px 0 20px; }
+        .footer__content { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+        .footer__logo h2 { font-family: var(--font-jp); }
+        .footer__logo p { font-size: 0.8rem; opacity: 0.7; }
+        .footer__links li { margin-bottom: 10px; }
+        .footer__copyright { text-align: center; font-size: 0.8rem; opacity: 0.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .header__nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background-color: var(--color-bg); flex-direction: column; justify-content: center; transition: right 0.4s ease; }
+            .header.is-active .header__nav { right: 0; }
+            .header__list { flex-direction: column; gap: 40px; align-items: center; }
+            .header__item a { color: var(--color-text); font-size: 1.2rem; }
+            .header__hamburger { display: block; }
+            .header.is-active .header__hamburger span { background-color: var(--color-text); }
+            .header.is-active .header__hamburger span:nth-child(1) { top: 50%; transform: rotate(45deg); }
+            .header.is-active .header__hamburger span:nth-child(2) { opacity: 0; }
+            .header.is-active .header__hamburger span:nth-child(3) { bottom: auto; top: 50%; transform: rotate(-45deg); }
+        }
+
+        @media (max-width: 768px) {
+            .grid--2, .grid--3 { grid-template-columns: 1fr; }
+            .hero__title { font-size: 2rem; }
+            .hero__actions { flex-direction: column; width: 80%; margin: 0 auto; }
+            .concept__container { flex-direction: column; gap: 30px; }
+            .section-header--left { text-align: center; }
+            .howto__step { flex-direction: column !important; text-align: center; }
+            .howto__img { flex: 0 0 auto; width: 200px; margin: 0 auto; }
+            .news__link { flex-direction: column; gap: 5px; }
+            .access__content { flex-direction: column; }
+            .footer__content { flex-direction: column; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header id="header" class="header">
+        <div class="header__inner">
+            <h1 class="header__logo">
+                <a href="#">藤ゼム<span>（トウゼム）</span></a>
+            </h1>
+            <nav class="header__nav" id="js-nav">
+                <ul class="header__list">
+                    <li class="header__item"><a href="#plan">PLAN</a></li>
+                    <li class="header__item"><a href="#concept">CONCEPT</a></li>
+                    <li class="header__item"><a href="#guestroom">GUEST ROOM</a></li>
+                    <li class="header__item"><a href="#howto">HOW TO ENJOY</a></li>
+                    <li class="header__item"><a href="#voice">VOICE</a></li>
+                    <li class="header__item"><a href="#news">NEWS</a></li>
+                    <li class="header__item"><a href="#access">ACCESS</a></li>
+                    <li class="header__item header__item--btn"><a href="#reservation">RESERVE</a></li>
+                </ul>
+            </nav>
+            <button class="header__hamburger" id="js-hamburger" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="hero__bg">
+            <img src="https://placehold.co/1920x1080/556b2f/ffffff?text=Hero+Image+(Sea+or+Kominka)" alt="海辺の古民家 藤ゼムのイメージ" class="hero__img">
+        </div>
+        <div class="hero__content">
+            <p class="hero__sub-en">A private seaside kominka stay in Nishi-Kawana, Tateyama.</p>
+            <h2 class="hero__title">海辺に佇む、<br>貸切の古民家宿。</h2>
+            <p class="hero__sub-jp">千葉・南房総 西川名。<br>海と静けさに包まれる、一棟貸しの宿。</p>
+            <div class="hero__actions">
+                <a href="#plan" class="btn btn--outline">プランを見る</a>
+                <a href="#reservation" class="btn btn--primary">予約・お問い合わせ</a>
+            </div>
+        </div>
+        <div class="hero__scroll">SCROLL</div>
+    </section>
+
+    <main>
+        <!-- PLAN セクション -->
+        <section id="plan" class="section plan">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">PLAN</span>
+                    <h2 class="section-header__jp">プラン・ご宿泊</h2>
+                </div>
+                <div class="grid grid--3">
+                    <article class="card plan-card fade-in">
+                        <div class="card__img-wrapper">
+                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Basic+Plan" alt="基本宿泊プラン" class="card__img">
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__title">基本宿泊プラン</h3>
+                            <p class="card__price">¥25,000〜 / 棟</p>
+                            <p class="card__text">一棟貸切のスタンダードなプランです。海辺の暮らしを暮らすように楽しむ基本コース。</p>
+                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                        </div>
+                    </article>
+                    <article class="card plan-card fade-in">
+                        <div class="card__img-wrapper">
+                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Weekday+Plan" alt="平日ゆったりプラン" class="card__img">
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__title">平日ゆったりプラン</h3>
+                            <p class="card__price">¥18,000〜 / 棟</p>
+                            <p class="card__text">平日限定のお得なプラン。ワーケーションや静かな創作活動にも最適です。</p>
+                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                        </div>
+                    </article>
+                    <article class="card plan-card fade-in">
+                        <div class="card__img-wrapper">
+                            <img src="https://placehold.co/600x400/e0e0e0/333?text=Long+Stay" alt="連泊・長期滞在プラン" class="card__img">
+                        </div>
+                        <div class="card__body">
+                            <h3 class="card__title">連泊・長期滞在プラン</h3>
+                            <p class="card__price">お問い合わせ</p>
+                            <p class="card__text">2泊以上のご利用で割引適用。南房総の拠として、ゆっくりと過ごしたい方向け。</p>
+                            <a href="#reservation" class="btn btn--sm">このプランで相談</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCEPT セクション -->
+        <section id="concept" class="section concept">
+            <div class="container concept__container">
+                <div class="concept__img fade-in">
+                    <img src="https://placehold.co/800x1000/1e3d59/ffffff?text=Concept+Image" alt="海辺の静けさと古民家の佇まい">
+                </div>
+                <div class="concept__content fade-in">
+                    <div class="section-header section-header--left">
+                        <span class="section-header__en">CONCEPT</span>
+                        <h2 class="section-header__jp">海辺の古民家<br>一棟貸しの宿</h2>
+                    </div>
+                    <p class="text-body">
+                        波の音がBGMになる、海辺の静かな集落。<br>
+                        「藤ゼム」は、千葉県館山市西川名にある、築数十年を経た古民家を一棟貸し切りでご利用いただけるお宿です。
+                    </p>
+                    <p class="text-body">
+                        誰にも邪魔されない貸切の安心感と、木のぬくもりに包まれる空間。<br>
+                        窓を開ければ潮風が抜け、夜には満点の星空が広がります。
+                    </p>
+                    <p class="text-body">
+                        観光地を忙しく巡る旅もいいけれど、ここでは「何もしない」贅沢を。<br>
+                        大切な人と、ただ海を眺め、語り合う。<br>
+                        そんな豊かな時間をお過ごしください。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUEST ROOM セクション -->
+        <section id="guestroom" class="section guestroom">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">GUEST ROOM</span>
+                    <h2 class="section-header__jp">客室・設備</h2>
+                </div>
+                <div class="grid grid--2">
+                    <div class="guestroom__item fade-in">
+                        <img src="https://placehold.co/800x500/d2b48c/333?text=Japanese+Room" alt="和室スペース" class="guestroom__img">
+                        <h3 class="guestroom__sub-title">和室・リビング</h3>
+                        <p>畳の香りが心地よい和室と、みんなで寛げるリビングスペース。</p>
+                    </div>
+                    <div class="guestroom__item fade-in">
+                        <img src="https://placehold.co/800x500/d2b48c/333?text=Kitchen" alt="キッチンスペース" class="guestroom__img">
+                        <h3 class="guestroom__sub-title">キッチン・水回り</h3>
+                        <p>地元の食材を持ち込んで料理ができる、調理器具完備のキッチン。</p>
+                    </div>
+                </div>
+                <div class="facility-box fade-in">
+                    <h3 class="facility-box__title">主な設備・アメニティ</h3>
+                    <ul class="facility-list">
+                        <li>寝具一式（布団）</li>
+                        <li>キッチン（ガスコンロ・冷蔵庫・電子レンジ）</li>
+                        <li>調理器具・食器類</li>
+                        <li>バス・トイレ（ウォシュレット付）</li>
+                        <li>ヘアドライヤー</li>
+                        <li>タオル類</li>
+                        <li>無料Wi-Fi</li>
+                        <li>駐車場（2台分）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW TO ENJOY セクション -->
+        <section id="howto" class="section howto">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">HOW TO ENJOY</span>
+                    <h2 class="section-header__jp">藤ゼムでの過ごし方</h2>
+                </div>
+                <div class="howto__steps">
+                    <div class="howto__step fade-in">
+                        <div class="howto__img">
+                            <img src="https://placehold.co/300x300/87ceeb/333?text=Walk" alt="散歩">
+                        </div>
+                        <div class="howto__text">
+                            <span class="howto__time">15:00 - Sunset</span>
+                            <h3>到着・海辺の散歩</h3>
+                            <p>チェックイン後は、すぐ近くの海へ。潮だまりの観察や、夕日が沈むマジックアワーを堪能。</p>
+                        </div>
+                    </div>
+                    <div class="howto__step fade-in">
+                        <div class="howto__img">
+                            <img src="https://placehold.co/300x300/ffdab9/333?text=Dinner" alt="夕食">
+                        </div>
+                        <div class="howto__text">
+                            <span class="howto__time">18:00 - Dinner</span>
+                            <h3>自炊・持ち寄りディナー</h3>
+                            <p>近くの直売所で買った新鮮な野菜や魚を使って、キッチンでわいわい料理を楽しむ時間。</p>
+                        </div>
+                    </div>
+                    <div class="howto__step fade-in">
+                        <div class="howto__img">
+                            <img src="https://placehold.co/300x300/191970/ffffff?text=Night" alt="夜">
+                        </div>
+                        <div class="howto__text">
+                            <span class="howto__time">21:00 - Relax</span>
+                            <h3>静寂と星空</h3>
+                            <p>集落の夜はとても静かです。波の音を聞きながら読書をしたり、外に出て満点の星空を眺めたり。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOICE セクション -->
+        <section id="voice" class="section voice">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">VOICE</span>
+                    <h2 class="section-header__jp">ご宿泊された方の声</h2>
+                </div>
+                <div class="grid grid--3">
+                    <div class="voice-card fade-in">
+                        <p class="voice-card__meta">2024年8月 / 40代ご夫婦</p>
+                        <p class="voice-card__text">「本当に海が近くて驚きました。夜は波の音しか聞こえない静けさで、久しぶりによく眠れました。古民家の雰囲気も懐かしくて素敵です。」</p>
+                    </div>
+                    <div class="voice-card fade-in">
+                        <p class="voice-card__meta">2024年9月 / 友人グループ</p>
+                        <p class="voice-card__text">「キッチンが広くて使いやすかったです。地元のスーパーで魚を買って料理しました。一棟貸しなので周りを気にせず過ごせたのが良かったです。」</p>
+                    </div>
+                    <div class="voice-card fade-in">
+                        <p class="voice-card__meta">2024年10月 / 家族連れ</p>
+                        <p class="voice-card__text">「子供たちにとって初めての古民家体験でした。おばあちゃんの家に来たみたい！と喜んでいました。また夏に来たいです。」</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWS セクション -->
+        <section id="news" class="section news">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">NEWS</span>
+                    <h2 class="section-header__jp">お知らせ</h2>
+                </div>
+                <div class="news__list">
+                    <article class="news__item fade-in">
+                        <a href="#" class="news__link">
+                            <time class="news__date" datetime="2024-11-15">2024.11.15</time>
+                            <span class="news__cat">お知らせ</span>
+                            <h3 class="news__title">公式サイトを公開いたしました</h3>
+                        </a>
+                    </article>
+                    <article class="news__item fade-in">
+                        <a href="#" class="news__link">
+                            <time class="news__date" datetime="2024-11-01">2024.11.01</time>
+                            <span class="news__cat">季節の便り</span>
+                            <h3 class="news__title">西川名の夕日が美しい季節になりました</h3>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCESS セクション (Updated) -->
+        <section id="access" class="section access">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">ACCESS</span>
+                    <h2 class="section-header__jp">アクセス</h2>
+                </div>
+                <div class="access__content fade-in">
+                    <div class="access__info">
+                        <h3 class="access__name">藤ゼム（トウゼム）<br><span class="u-text-sm">海辺の古民家一棟貸し宿</span></h3>
+                        <p class="access__address">〒294-0315 千葉県館山市西川名１８４−１</p>
+                        <dl class="access__dl">
+                            <dt>お車で</dt>
+                            <dd>富津館山道路「富浦IC」より約25分</dd>
+                            <dt>交通機関で</dt>
+                            <dd>JR内房線「館山駅」よりJRバスまたはタクシーで約20分</dd>
+                        </dl>
+                        <!-- 追加：アプリで開くボタン -->
+                        <div style="margin-top: 20px;">
+                            <a href="https://maps.app.goo.gl/8FqCo4cHjJ277KXC8" target="_blank" class="btn btn--sm">Googleマップアプリで開く</a>
+                        </div>
+                    </div>
+                    <div class="access__map">
+                        <!-- 更新：住所ベースの埋め込み -->
+                        <iframe src="https://maps.google.com/maps?q=千葉県館山市西川名184-1&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESERVATION セクション -->
+        <section id="reservation" class="section reservation">
+            <div class="container container--narrow">
+                <div class="section-header fade-in">
+                    <span class="section-header__en">RESERVATION</span>
+                    <h2 class="section-header__jp">ご予約・お問い合わせ</h2>
+                </div>
+                <div class="reservation__lead fade-in">
+                    <p>公式サイトからの直接ご予約・お問い合わせを承っております。<br>
+                    以下のフォーム、またはLINEよりお気軽にご連絡ください。</p>
+                </div>
+                <div class="reservation__line fade-in">
+                    <a href="#" class="btn btn--line">LINEで問い合わせる</a>
+                </div>
+                <form action="#" method="post" class="form fade-in">
+                    <div class="form__item">
+                        <label for="name" class="form__label">お名前 <span class="required">必須</span></label>
+                        <input type="text" id="name" name="name" class="form__input" required placeholder="山田 太郎">
+                    </div>
+                    <div class="form__item">
+                        <label for="email" class="form__label">メールアドレス <span class="required">必須</span></label>
+                        <input type="email" id="email" name="email" class="form__input" required placeholder="info@example.com">
+                    </div>
+                    <div class="form__item">
+                        <label for="tel" class="form__label">電話番号</label>
+                        <input type="tel" id="tel" name="tel" class="form__input" placeholder="090-1234-5678">
+                    </div>
+                    <div class="form__item">
+                        <label class="form__label">ご希望宿泊日</label>
+                        <div class="form__group-date">
+                            <input type="date" name="checkin" class="form__input">
+                            <span>〜</span>
+                            <input type="date" name="checkout" class="form__input">
+                        </div>
+                    </div>
+                    <div class="form__item">
+                        <label for="plan-select" class="form__label">ご希望プラン</label>
+                        <select id="plan-select" name="plan" class="form__select">
+                            <option value="">選択してください</option>
+                            <option value="basic">基本宿泊プラン</option>
+                            <option value="weekday">平日ゆったりプラン</option>
+                            <option value="long">連泊・長期滞在プラン</option>
+                            <option value="other">その他・未定</option>
+                        </select>
+                    </div>
+                    <div class="form__item">
+                        <label for="message" class="form__label">お問い合わせ内容</label>
+                        <textarea id="message" name="message" class="form__textarea" rows="6" placeholder="人数やご質問などをご記入ください"></textarea>
+                    </div>
+                    <div class="form__submit">
+                        <button type="submit" class="btn btn--primary btn--wide">送信する</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    <h2>藤ゼム</h2>
+                    <p>海辺の古民家一棟貸し宿</p>
+                </div>
+                <ul class="footer__links">
+                    <li><a href="#plan">宿泊プラン</a></li>
+                    <li><a href="#access">アクセス</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+            <p class="footer__copyright">&copy; 2024 TOZEM. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* =========================================
+           JavaScript (Merged)
+           ========================================= */
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            const hamburger = document.getElementById('js-hamburger');
+            const nav = document.getElementById('js-nav');
+            const navLinks = nav.querySelectorAll('a');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) header.classList.add('is-scrolled');
+                else header.classList.remove('is-scrolled');
+            });
+
+            hamburger.addEventListener('click', () => header.classList.toggle('is-active'));
+            navLinks.forEach(link => link.addEventListener('click', () => header.classList.remove('is-active')));
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    }
+                });
+            });
+
+            const fadeObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px', threshold: 0.15 });
+
+            document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
